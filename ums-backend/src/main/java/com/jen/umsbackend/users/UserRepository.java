@@ -1,10 +1,8 @@
 package com.jen.umsbackend.users;
 
-// import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 // interacts with the database
-public interface UserRepository {
-    List<UserDTO> getUsers();
-    
-}
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {}

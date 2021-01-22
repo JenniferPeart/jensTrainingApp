@@ -2,33 +2,33 @@ package com.jen.umsbackend.users;
 
 public class UserDTO {
 
-    private int id;
-    private String name;
+    private long id;
+    private String fullName;
     private String email;
 
     public UserDTO() {}
 
-    public UserDTO(int id, String name, String email) {
-
+    public UserDTO(long id, String fullName, String email) {
+        super();
         this.id = id;
-        this.name = name;
+        this.fullName = fullName;
         this.email = email;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {

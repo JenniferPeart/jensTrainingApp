@@ -20,7 +20,12 @@ export class UsersComponent implements OnInit {
   }
 
   getUsers(): void {
-    this.userService.getUsers().subscribe(response => this.users = response);
+    this.userService.getUsers().subscribe(
+      response => {
+        this.users = response
+      },
+      err => {alert("Error occurred while getting the users list")}
+      );
   }
 
 }

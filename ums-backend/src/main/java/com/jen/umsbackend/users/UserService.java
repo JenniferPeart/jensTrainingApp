@@ -14,14 +14,6 @@ public class UserService {
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
 
-        userRepository.deleteAll();
-        
-        User user = new User();
-        user.setFullName("Will Smith");
-        user.setEmail("willsmith@hotmail.com");
-        userRepository.save(user);
-
-
     }
 
     public List<UserDTO> getUsers() {
@@ -32,6 +24,26 @@ public class UserService {
             .stream()
             .map(user -> mapper.map(user, UserDTO.class))
             .collect(Collectors.toList());
-	}
+    }
+    
+    public boolean addUser(UserDTO userDTO) {
+        // receive a userDTO from the client
+        // convert it to a user
+        // save to db
+        
+        boolean status;
+
+        try {
+            ModelMapper mapper = new ModelMapper();
+            User user = mapper.map(userDTO, User.class);
+            userRepository.save(user);
+            status = true;
+            
+        } catch (Exception e) {
+            status = false;
+        }
+        
+        return status;
+    }
     
 }

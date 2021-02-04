@@ -15,11 +15,18 @@ public class User {
     @Column(name = "id", nullable = false, updatable = false)
     private long id;
 
-    @Column(name = "full_name", nullable = false)
+    @Column(name = "full_name")
     private String fullName;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email")
     private String email;
+
+    public User() {}
+
+    public User(String fullName, String email) {
+        this.fullName = fullName;
+        this.email = email;
+    }
 
     public long getId() {
         return id;

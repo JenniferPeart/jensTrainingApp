@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,9 +33,7 @@ public class UserServiceTest {
     public void shouldGetUsers() {
 
         // Mock what the repository returns
-        User testUser = new User();
-        testUser.setFullName("TestName");
-        testUser.setEmail("Test@hotmail.com");
+        User testUser = new User("TestName", "Test@hotmail.com");
         List<User> usersList = Arrays.asList(testUser);
         when(userRepository.findAll()).thenReturn(usersList);
 
@@ -42,5 +43,22 @@ public class UserServiceTest {
         assertEquals(usersList.get(0).getFullName(), usersDTOList.get(0).getFullName());
     }
 
+    @Test
+    public void shouldAddUser() {
+        // want a user to be added to the db and return the status
+
+        //arrange
+        UserDTO testUser = new UserDTO("TestName", "Test@hotmail.com");
+        boolean expectedStatus = true;
+        when(userRepository.save(any(User.class))).thenReturn(any(User.class));
+
+        //act
+        userService.addUser(testUser);
+        
+        //assert
+        assertEquals(expectedStatus, userService.addUser(testUser));
+        verify(userRepository, times(1)).save(any(User.class));
+
+    }
 
 }

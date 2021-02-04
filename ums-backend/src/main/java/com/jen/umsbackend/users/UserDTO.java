@@ -15,6 +15,11 @@ public class UserDTO {
         this.email = email;
     }
 
+    public UserDTO(String fullName, String email) {
+        this.fullName = fullName;
+        this.email = email;
+    }
+
     public long getId() {
         return id;
     }

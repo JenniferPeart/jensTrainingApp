@@ -26,7 +26,7 @@ public class UserService {
             .collect(Collectors.toList());
     }
     
-    public User addUser(UserDTO userDTO) {
+    public User editOrAddUser(UserDTO userDTO) {
         // receive a userDTO from the client
         // convert it to a user
         // save that user to db    

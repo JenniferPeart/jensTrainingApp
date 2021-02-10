@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -27,7 +28,12 @@ public class UserController {
     
     @PostMapping(value="/addUser")
     public User addUser(@RequestBody UserDTO userDTO) {
-        return userService.addUser(userDTO);
+        return userService.editOrAddUser(userDTO);
+    }
+
+    @PutMapping(value="/editUser")
+    public User editUser(@RequestBody UserDTO userDTO) {
+        return userService.editOrAddUser(userDTO);
     }
     
 }

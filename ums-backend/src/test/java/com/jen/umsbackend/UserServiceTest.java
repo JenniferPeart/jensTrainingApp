@@ -44,23 +44,22 @@ public class UserServiceTest {
     }
 
     @Test
-    public void shouldAddUser() {
+    public void shouldEditOrAddUser() {
         // should take in a userDTO (from the client), convert it to a user
         // then save that user to db using userRepo, returning the user with it's id
 
-        //arrange
+        // Arrange
         UserDTO testUserDTO = new UserDTO("TestName", "Test@hotmail.com");
         User testUser = new User(5, "TestName", "Test@hotmail.com");
         when(userRepository.save(any(User.class))).thenReturn(testUser);
 
-        //act
-        User savedUser = userService.addUser(testUserDTO);
-        // String testName = testUser.getFullName();
-        // String savedName = savedUser.getFullName();
+        // Act
+        User savedUser = userService.editOrAddUser(testUserDTO);
         
-        //assert
+        // Assert
         // that the expected returned user (test user) matches the actual returned (saved) user
         assertEquals(testUser.getFullName(), savedUser.getFullName());
+        
         // that userRepository.save() was called once
         verify(userRepository, times(1)).save(any(User.class));
 

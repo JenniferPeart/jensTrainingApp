@@ -26,24 +26,15 @@ public class UserService {
             .collect(Collectors.toList());
     }
     
-    public boolean addUser(UserDTO userDTO) {
+    public User addUser(UserDTO userDTO) {
         // receive a userDTO from the client
         // convert it to a user
-        // save to db
-        
-        boolean status;
+        // save that user to db    
 
-        try {
-            ModelMapper mapper = new ModelMapper();
-            User user = mapper.map(userDTO, User.class);
-            userRepository.save(user);
-            status = true;
-            
-        } catch (Exception e) {
-            status = false;
-        }
-        
-        return status;
+        ModelMapper mapper = new ModelMapper();
+        User user = mapper.map(userDTO, User.class);
+        return userRepository.save(user);
+
     }
     
 }

@@ -45,18 +45,23 @@ public class UserServiceTest {
 
     @Test
     public void shouldAddUser() {
-        // want a user to be added to the db and return the status
+        // should take in a userDTO (from the client), convert it to a user
+        // then save that user to db using userRepo, returning the user with it's id
 
         //arrange
-        UserDTO testUser = new UserDTO("TestName", "Test@hotmail.com");
-        boolean expectedStatus = true;
-        when(userRepository.save(any(User.class))).thenReturn(any(User.class));
+        UserDTO testUserDTO = new UserDTO("TestName", "Test@hotmail.com");
+        User testUser = new User(5, "TestName", "Test@hotmail.com");
+        when(userRepository.save(any(User.class))).thenReturn(testUser);
 
         //act
-        userService.addUser(testUser);
+        User savedUser = userService.addUser(testUserDTO);
+        // String testName = testUser.getFullName();
+        // String savedName = savedUser.getFullName();
         
         //assert
-        assertEquals(expectedStatus, userService.addUser(testUser));
+        // that the expected returned user (test user) matches the actual returned (saved) user
+        assertEquals(testUser.getFullName(), savedUser.getFullName());
+        // that userRepository.save() was called once
         verify(userRepository, times(1)).save(any(User.class));
 
     }

@@ -26,18 +26,8 @@ public class UserController {
     }
     
     @PostMapping(value="/addUser")
-    public String addUser(@RequestBody UserDTO userDTO) {
-        String update;
-
-        try {
-            userService.addUser(userDTO);
-            update = userDTO.toString() + " has been added";
-            
-        } catch (Exception e) {
-            update = "There was an issue adding the user";
-        }
-          
-        return update;
+    public User addUser(@RequestBody UserDTO userDTO) {
+        return userService.addUser(userDTO);
     }
     
 }

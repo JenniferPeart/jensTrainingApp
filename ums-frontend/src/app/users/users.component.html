@@ -16,3 +16,17 @@
       </tr>
     </tbody>
   </table>
+
+  <h2>Add User</h2>
+
+<div>
+    <label>Full Name:
+        <input #userFullName />
+    </label>
+    <label>Email:
+        <input #userEmail />
+    </label>
+    <button (click)="addUser(userFullName.value, userEmail.value); userFullName.value=''; userEmail.value=''">
+        Add
+    </button>    
+</div>

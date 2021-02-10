@@ -28,4 +28,17 @@ export class UsersComponent implements OnInit {
       );
   }
 
+  addUser(fullName: string, email: string): void {
+    fullName = fullName.trim();
+    email = email.trim();
+
+    if (!fullName) { return; }
+    if (!email) { return; }
+
+    this.userService.addUser({ fullName, email } as User)
+      .subscribe(user => {
+        this.users.push(user);
+      });
+  }
+
 }

@@ -23,6 +23,12 @@ public class User {
 
     public User() {}
 
+    public User(long id, String fullName, String email) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+    }
+
     public User(String fullName, String email) {
         this.fullName = fullName;
         this.email = email;

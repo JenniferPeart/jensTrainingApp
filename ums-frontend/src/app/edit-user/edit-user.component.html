@@ -1,0 +1,12 @@
+<h2>Edit user</h2>
+
+<p>Please enter the user's details:</p>
+<div>
+    <label>Full Name:
+        <input #userFullName />
+    </label>
+    <label>Email:
+        <input #userEmail />
+    </label>
+    <button type="button" class="btn btn-primary" (click)="editUser(userId, userFullName.value, userEmail.value)">Update</button>    
+</div>

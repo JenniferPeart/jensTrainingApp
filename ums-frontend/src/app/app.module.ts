@@ -5,11 +5,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UsersComponent } from './users/users.component';
 import { HttpClientModule } from '@angular/common/http';
+import { EditUserComponent } from './edit-user/edit-user.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UsersComponent
+    UsersComponent,
+    EditUserComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

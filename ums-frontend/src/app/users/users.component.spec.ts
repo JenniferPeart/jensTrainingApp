@@ -5,6 +5,8 @@ import { User } from '../user';
 import { USERS } from '../mock-users';
 import { UserService } from '../user.service';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
+import { routes } from '../app-routing.module';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -12,7 +14,6 @@ describe('UsersComponent', () => {
   let mockUsers: User[];
   let mockUser: User;
   let mockService: any;
-  let userService: UserService;
 
   beforeEach(() => {
     mockUsers = USERS;
@@ -20,10 +21,12 @@ describe('UsersComponent', () => {
 
     mockService = {
       getUsers: jasmine.createSpy('getUsers'),
-      addUser: jasmine.createSpy('addUser')
+      addUser: jasmine.createSpy('addUser'),
+      editUser: jasmine.createSpy('editUser')
     };
 
     TestBed.configureTestingModule({
+      imports: [ RouterTestingModule.withRoutes(routes) ],
       declarations: [ UsersComponent ],
       providers: [
         { provide: UserService, useValue: mockService },
@@ -33,7 +36,7 @@ describe('UsersComponent', () => {
 
     fixture = TestBed.createComponent(UsersComponent); 
     component = fixture.componentInstance; 
-    userService = TestBed.inject(UserService);
+    // userService = TestBed.inject(UserService);
 
   });
 
@@ -62,12 +65,17 @@ describe('UsersComponent', () => {
     expect(mockService.addUser).toHaveBeenCalledTimes(1);
   });
     
-  it('should display the added user is the list of users', () => {
+  it('should display the added user in the list of users', () => {
     mockService.getUsers.and.returnValue(of(mockUsers));
     mockService.addUser.and.returnValue(of(mockUser));
     fixture.detectChanges();
     component.addUser("testName", "test@email.com");
     expect(component.users).toContain(mockUser);
   });
+
+  // it('should navigate to /edit-user/id', () => {
+  //   component.clickEdit(mockUser);
+
+  // });
 
 });

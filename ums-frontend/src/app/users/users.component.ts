@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'
 
 import { User } from '../user';
 import { UserService } from '../user.service';
@@ -13,7 +14,7 @@ export class UsersComponent implements OnInit {
   title = 'Users'; 
   users!: User[];
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.getUsers();

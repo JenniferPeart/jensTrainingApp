@@ -72,5 +72,24 @@ describe('UserService', () => {
     req.flush(mockUser);
 
   });
+
+  it('should call http PUT and update a user', () => {
+    
+    // Arrange
+    mockUser = {id: 5, fullName: "Test Name", email: "test@gmail.com"};
+
+    //Act
+    service.editUser(mockUser).subscribe( user => {
+
+      //Assert
+      expect(user.fullName).toEqual(mockUser.fullName);
+    });
+
+    //Assert
+    let req = httpMock.expectOne('http://localhost:8080/api/v1/editUser');
+    expect(req.request.method).toBe("PUT");
+    req.flush(mockUser);
+
+  });
   
 });

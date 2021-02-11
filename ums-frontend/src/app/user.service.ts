@@ -46,6 +46,12 @@ export class UserService {
     );
   }
 
+  editUser(user: User): Observable<User> {
+    return this.http.put<User>(`${this.BASE_URL}editUser`, user, this.httpOptions).pipe(
+      catchError(this.handleError<User>('editUser'))
+    );
+  }
+
 }
 
 // The Observable is just a function, with minimal distinctive characteristics. 

@@ -13,3 +13,11 @@ h2 {
   color: #D31122;
   }
 
+nav a.active-list {
+  background-color: #369;
+}
+
+nav a {
+  font-size: 1.5rem;
+}
+

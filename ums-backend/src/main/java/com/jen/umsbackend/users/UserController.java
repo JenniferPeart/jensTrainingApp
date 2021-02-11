@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -34,6 +35,11 @@ public class UserController {
     @PutMapping(value="/editUser")
     public User editUser(@RequestBody UserDTO userDTO) {
         return userService.editOrAddUser(userDTO);
+    }
+
+    @DeleteMapping(value="/deleteUser")
+    public void deleteUser(@RequestBody UserDTO userDTO) {
+        userService.deleteUser(userDTO);
     }
     
 }

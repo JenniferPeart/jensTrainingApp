@@ -36,5 +36,16 @@ public class UserService {
         return userRepository.save(user);
 
     }
+
+    public void deleteUser(UserDTO userDTO) {
+        // receive a userDTO from the client
+        // convert it to a user
+        // delete that user from the db
+
+        ModelMapper mapper = new ModelMapper();
+        User user = mapper.map(userDTO, User.class);
+        userRepository.delete(user);
+
+    }
     
 }

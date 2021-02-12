@@ -22,7 +22,8 @@ describe('UsersComponent', () => {
     mockService = {
       getUsers: jasmine.createSpy('getUsers'),
       addUser: jasmine.createSpy('addUser'),
-      editUser: jasmine.createSpy('editUser')
+      editUser: jasmine.createSpy('editUser'),
+      deleteUser: jasmine.createSpy('deleteUser')
     };
 
     TestBed.configureTestingModule({
@@ -73,9 +74,17 @@ describe('UsersComponent', () => {
     expect(component.users).toContain(mockUser);
   });
 
-  // it('should navigate to /edit-user/id', () => {
-  //   component.clickEdit(mockUser);
+  it('should make a call to delete a user', () => {
+    mockService.getUsers.and.returnValue(of(mockUsers));
+    fixture.detectChanges();
+    component.deleteUser(mockUser);
+    expect(mockService.deleteUser).toHaveBeenCalledTimes(1);
+  });
 
-  // });
-
+  it('should NOT display the deleted user in the list of users', () => {
+    mockService.getUsers.and.returnValue(of(mockUsers));
+    fixture.detectChanges();
+    component.deleteUser(mockUser);
+    expect(component.users).not.toContain(mockUser);
+  });
 });

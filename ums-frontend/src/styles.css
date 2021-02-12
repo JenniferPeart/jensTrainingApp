@@ -9,15 +9,10 @@ h1 {
   }
 
 h2 {
-  margin: 30px;  
+  margin: 15px;
   color: #D31122;
   }
-
-nav a.active-list {
-  background-color: #369;
-}
 
 nav a {
   font-size: 1.5rem;
 }
-

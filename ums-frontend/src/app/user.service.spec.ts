@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { UserService } from './user.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { USERS } from './mock-users';
 import { User } from './user';
 
@@ -20,7 +20,6 @@ describe('UserService', () => {
     httpMock = TestBed.inject(HttpTestingController);
     service = TestBed.inject(UserService);
     mockUsers = USERS;
-
   });
 
   afterEach(() => {
@@ -32,7 +31,6 @@ describe('UserService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-
 
   it('should call http GET and get a list of users', () => {
 
@@ -51,11 +49,10 @@ describe('UserService', () => {
     // respond with mock data, causing Observable to resolve
     // subscribe callback asserts that correct data ws returned
     req.flush(mockUsers);
-
   });
 
-  it('should call http POST and add a user', () => {
-    
+  it('should call http POST and add a user', () => {  
+
     // Arrange
     mockUser = {id: 5, fullName: "Test Name", email: "test@gmail.com"};
 
@@ -70,7 +67,6 @@ describe('UserService', () => {
     let req = httpMock.expectOne('http://localhost:8080/api/v1/addUser');
     expect(req.request.method).toBe("POST");
     req.flush(mockUser);
-
   });
 
   it('should call http PUT and update a user', () => {
@@ -89,7 +85,15 @@ describe('UserService', () => {
     let req = httpMock.expectOne('http://localhost:8080/api/v1/editUser');
     expect(req.request.method).toBe("PUT");
     req.flush(mockUser);
+  });
 
+  it('should call http DELETE and delete a user', () => {
+    mockUser = {id: 5, fullName: "Test Name", email: "test@gmail.com"};
+    service.deleteUser(mockUser).subscribe();
+
+    let req = httpMock.expectOne('http://localhost:8080/api/v1/deleteUser');
+    expect(req.request.method).toBe("DELETE");
+    req.flush(mockUser);
   });
   
 });

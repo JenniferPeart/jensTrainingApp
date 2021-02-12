@@ -52,6 +52,12 @@ export class UserService {
     );
   }
 
+  deleteUser(user: User): Observable<User> {
+    return this.http.delete<User>(`${this.BASE_URL}deleteUser`, this.httpOptions).pipe(
+      catchError(this.handleError<User>('deleteUser'))
+    );
+  }
+
 }
 
 // The Observable is just a function, with minimal distinctive characteristics. 

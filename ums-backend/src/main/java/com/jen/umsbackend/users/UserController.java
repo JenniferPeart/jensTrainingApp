@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 @RestController
@@ -37,9 +37,9 @@ public class UserController {
         return userService.editOrAddUser(userDTO);
     }
 
-    @DeleteMapping(value="/deleteUser")
-    public void deleteUser(@RequestBody UserDTO userDTO) {
-        userService.deleteUser(userDTO);
+    @DeleteMapping(value="/deleteUser/{userId}")
+    public User deleteUser(@PathVariable("userId") long userId) {
+        return userService.deleteUser(userId);
     }
     
 }

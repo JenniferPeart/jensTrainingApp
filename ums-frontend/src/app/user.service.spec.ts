@@ -88,10 +88,10 @@ describe('UserService', () => {
   });
 
   it('should call http DELETE and delete a user', () => {
-    mockUser = {id: 5, fullName: "Test Name", email: "test@gmail.com"};
+    mockUser = {id: 5, fullName: "Den", email: "den@gamil.com"};
     service.deleteUser(mockUser).subscribe();
 
-    let req = httpMock.expectOne('http://localhost:8080/api/v1/deleteUser');
+    let req = httpMock.expectOne('http://localhost:8080/api/v1/deleteUser/'+ mockUser.id);
     expect(req.request.method).toBe("DELETE");
     req.flush(mockUser);
   });

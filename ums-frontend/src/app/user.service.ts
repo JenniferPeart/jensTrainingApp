@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 import { User } from './user';
 
@@ -53,7 +53,7 @@ export class UserService {
   }
 
   deleteUser(user: User): Observable<User> {
-    return this.http.delete<User>(`${this.BASE_URL}deleteUser`, this.httpOptions).pipe(
+    return this.http.delete<User>(`${this.BASE_URL}deleteUser/${user.id}`, this.httpOptions).pipe(
       catchError(this.handleError<User>('deleteUser'))
     );
   }

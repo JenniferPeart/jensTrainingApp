@@ -66,17 +66,9 @@ public class UserServiceTest {
 
     @Test
     public void shouldDeleteUser() {
-        // should take in a userDTO (from the client), convert it to a user
-        // then delete that user from the db using userRepo, returning void
-
-        // Arrange
-        UserDTO testUserDTO = new UserDTO(5, "TestName", "Test@hotmail.com");
-
-        // Act
-        userService.deleteUser(testUserDTO);
-        
-        // that userRepository.save() was called once
-        verify(userRepository, times(1)).delete(any(User.class));
+        long testId = 5;
+        userService.deleteUser(testId);
+        verify(userRepository, times(1)).deleteById(testId);
     }
 
 }

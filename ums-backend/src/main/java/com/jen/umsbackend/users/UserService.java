@@ -2,7 +2,6 @@ package com.jen.umsbackend.users;
 
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,7 +12,6 @@ public class UserService {
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-
     }
 
     public List<UserDTO> getUsers() {
@@ -34,18 +32,12 @@ public class UserService {
         ModelMapper mapper = new ModelMapper();
         User user = mapper.map(userDTO, User.class);
         return userRepository.save(user);
-
     }
 
-    public void deleteUser(UserDTO userDTO) {
-        // receive a userDTO from the client
-        // convert it to a user
-        // delete that user from the db
-
-        ModelMapper mapper = new ModelMapper();
-        User user = mapper.map(userDTO, User.class);
-        userRepository.delete(user);
-
+    public User deleteUser(long userId) {
+        User user = userRepository.findById(userId).get();
+        userRepository.deleteById(userId);
+        return user;
     }
     
 }

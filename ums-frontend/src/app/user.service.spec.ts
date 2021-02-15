@@ -36,14 +36,14 @@ describe('UserService', () => {
 
     // Act
     service.getUsers().subscribe( result => {
-      // Assert - that when the observable resolves, the result matches test data
+      // Assert that when the observable resolves, the result matches test data
       expect(result).toEqual(mockUsers);
     });
 
-    // assert that a request is made to the our URl
+    // Assert that a request is made to the our URl
     let req = httpMock.expectOne('http://localhost:8080/api/v1/getUsers');
 
-    // asset that the request is called using the GET HTTP method
+    // Assert that the request is called using the GET HTTP method
     expect(req.request.method).toBe("GET");
 
     // respond with mock data, causing Observable to resolve
@@ -71,17 +71,11 @@ describe('UserService', () => {
 
   it('should call http PUT and update a user', () => {
     
-    // Arrange
     mockUser = {id: 5, fullName: "Test Name", email: "test@gmail.com"};
-
-    //Act
     service.editUser(mockUser).subscribe( user => {
-
-      //Assert
       expect(user.fullName).toEqual(mockUser.fullName);
     });
 
-    //Assert
     let req = httpMock.expectOne('http://localhost:8080/api/v1/editUser');
     expect(req.request.method).toBe("PUT");
     req.flush(mockUser);

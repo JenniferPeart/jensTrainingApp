@@ -20,7 +20,6 @@ export class EditUserComponent implements OnInit {
       let id: number = parseInt(str);
       this.userId = id;
     }
-    
   }
 
   editUser(id: number, fullName: string, email: string): void {
@@ -33,11 +32,7 @@ export class EditUserComponent implements OnInit {
     this.userService.editUser({id, fullName, email } as User)
     .subscribe( user => {
       this.router.navigate(['/users']);
-    }
-      
-    );
-
-    
+    });
   }
 
 }

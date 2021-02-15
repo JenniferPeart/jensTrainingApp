@@ -37,8 +37,6 @@ describe('UsersComponent', () => {
 
     fixture = TestBed.createComponent(UsersComponent); 
     component = fixture.componentInstance; 
-    // userService = TestBed.inject(UserService);
-
   });
 
   it('should be created', () => {
@@ -49,7 +47,6 @@ describe('UsersComponent', () => {
     mockService.getUsers.and.returnValue(of(mockUsers));
     fixture.detectChanges();
     expect(mockService.getUsers).toHaveBeenCalledTimes(1);
-
   });
 
   it('should store the list of users', () => {

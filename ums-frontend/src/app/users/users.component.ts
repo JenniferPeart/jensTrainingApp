@@ -13,6 +13,8 @@ export class UsersComponent implements OnInit {
 
   title = 'Users'; 
   users!: User[];
+  showModal: boolean = false;
+  modalUser: User = {id: 0, fullName: "Null", email: "Null"};
 
   constructor(private userService: UserService, private router: Router) {}
 
@@ -43,8 +45,18 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(user: User): void {
-    this.users = this.users.filter(u => u !== user);
+    this.users = this.users.filter(u => u.id !== user.id);
     this.userService.deleteUser(user).subscribe();
+    this.showModal = false;
+  }
+
+  showDeleteUserModal(modalUser: User) {
+    this.showModal = true;
+    this.modalUser = modalUser;
+  }
+
+  hideDeleteUserModal() {
+    this.showModal = false;
   }
 
 }

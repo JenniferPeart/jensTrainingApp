@@ -24,6 +24,7 @@ export class UserService {
     return (error: any): Observable<T> => {
       // send the error to remote logging infrastructure
       console.error(error);
+      {alert("The system was unable to complete your request to "+ operation)};
       // let the app keep running by returning an empty result
       return of(result as T);
     };
@@ -36,25 +37,25 @@ export class UserService {
       // then passes the error to the error handling function
       // the handleError() method reports the error and then returns and innocuous result
       // so that the app keeps working
-      catchError(this.handleError<User[]>('getUsers', []))
+      catchError(this.handleError<User[]>('get users.', []))
     );
   }
 
   addUser(user: User): Observable<User> {
     return this.http.post<User>(`${this.BASE_URL}addUser`, user, this.httpOptions).pipe(
-      catchError(this.handleError<User>('addUser'))
+      catchError(this.handleError<User>('add a user.'))
     );
   }
 
   editUser(user: User): Observable<User> {
     return this.http.put<User>(`${this.BASE_URL}editUser`, user, this.httpOptions).pipe(
-      catchError(this.handleError<User>('editUser'))
+      catchError(this.handleError<User>('edit a user.'))
     );
   }
 
   deleteUser(user: User): Observable<User> {
     return this.http.delete<User>(`${this.BASE_URL}deleteUser/${user.id}`, this.httpOptions).pipe(
-      catchError(this.handleError<User>('deleteUser'))
+      catchError(this.handleError<User>('delete a user.'))
     );
   }
 

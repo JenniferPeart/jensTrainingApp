@@ -13,11 +13,14 @@ describe('UsersComponent', () => {
   let fixture: ComponentFixture<UsersComponent>;
   let mockUsers: User[];
   let mockUser: User;
+  let existingMockUser: User
   let mockService: any;
+  
 
   beforeEach(() => {
     mockUsers = USERS;
     mockUser = {id: 5, fullName: "testName", email: "test@email.com"}
+    existingMockUser = {id: 5, fullName: "Den", email: "den@gamil.com"};
 
     mockService = {
       getUsers: jasmine.createSpy('getUsers'),
@@ -71,8 +74,7 @@ describe('UsersComponent', () => {
     expect(component.users).toContain(mockUser);
   });
 
-  it('should make a call to delete a user', () => {
-    let existingMockUser: User = {id: 5, fullName: "Den", email: "den@gamil.com"};
+  it('should make a call to delete a user', () => { 
     mockService.getUsers.and.returnValue(of(mockUsers));
     mockService.deleteUser.and.returnValue(of(existingMockUser));
     fixture.detectChanges();
@@ -80,12 +82,11 @@ describe('UsersComponent', () => {
     expect(mockService.deleteUser).toHaveBeenCalledTimes(1);
   });
 
-  // it('should NOT display the deleted user in the list of users', () => {
-  //   let existingMockUser: User = {id: 5, fullName: "Den", email: "den@gamil.com"};
-  //   mockService.getUsers.and.returnValue(of(mockUsers));
-  //   mockService.deleteUser.and.returnValue(of(existingMockUser));
-  //   fixture.detectChanges();
-  //   component.deleteUser(existingMockUser);
-  //   expect(component.users).not.toContain(existingMockUser);
-  // });
+  it('should NOT display the deleted user in the list of users', () => {
+    mockService.getUsers.and.returnValue(of(mockUsers));
+    mockService.deleteUser.and.returnValue(of(existingMockUser));
+    fixture.detectChanges();
+    component.deleteUser(existingMockUser);
+    expect(component.users).not.toContain(existingMockUser);
+  });
 });

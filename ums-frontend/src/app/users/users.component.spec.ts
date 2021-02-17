@@ -13,14 +13,13 @@ describe('UsersComponent', () => {
   let fixture: ComponentFixture<UsersComponent>;
   let mockUsers: User[];
   let mockUser: User;
-  let existingMockUser: User
+  let existingMockUser: User;
   let mockService: any;
-  
 
   beforeEach(() => {
     mockUsers = USERS;
-    mockUser = {id: 5, fullName: "testName", email: "test@email.com"}
-    existingMockUser = {id: 5, fullName: "Den", email: "den@gamil.com"};
+    mockUser = {id: 5, fullName: 'testName', email: 'test@email.com'};
+    existingMockUser = {id: 5, fullName: 'Den', email: 'den@gamil.com'};
 
     mockService = {
       getUsers: jasmine.createSpy('getUsers'),
@@ -38,8 +37,8 @@ describe('UsersComponent', () => {
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(UsersComponent); 
-    component = fixture.componentInstance; 
+    fixture = TestBed.createComponent(UsersComponent);
+    component = fixture.componentInstance;
   });
 
   it('should be created', () => {
@@ -62,15 +61,15 @@ describe('UsersComponent', () => {
     mockService.getUsers.and.returnValue(of(mockUsers));
     mockService.addUser.and.returnValue(of(mockUser));
     fixture.detectChanges();
-    component.addUser("testName", "test@email.com");
+    component.addUser('testName', 'test@email.com');
     expect(mockService.addUser).toHaveBeenCalledTimes(1);
   });
-    
+  
   it('should display the added user in the list of users', () => {
     mockService.getUsers.and.returnValue(of(mockUsers));
     mockService.addUser.and.returnValue(of(mockUser));
     fixture.detectChanges();
-    component.addUser("testName", "test@email.com");
+    component.addUser('testName', 'test@email.com');
     expect(component.users).toContain(mockUser);
   });
 

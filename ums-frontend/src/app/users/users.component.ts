@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 
 import { User } from '../user';
 import { UserService } from '../user.service';
@@ -11,10 +11,10 @@ import { UserService } from '../user.service';
 })
 export class UsersComponent implements OnInit {
 
-  title = 'Users'; 
+  title = 'Users';
   users!: User[];
-  showModal: boolean = false;
-  modalUser: User = {id: 0, fullName: "Null", email: "Null"};
+  showModal = false;
+  modalUser: User = {id: 0, fullName: 'Null', email: 'Null'};
 
   constructor(private userService: UserService, private router: Router) {}
 
@@ -25,9 +25,9 @@ export class UsersComponent implements OnInit {
   getUsers(): void {
     this.userService.getUsers().subscribe(
       response => {
-        this.users = response
+        this.users = response;
       },
-      err => {alert("Error occurred while getting the users list")}
+      err => { alert('Error occurred while getting the users list'); }
       );
   }
 
@@ -50,12 +50,12 @@ export class UsersComponent implements OnInit {
     this.showModal = false;
   }
 
-  showDeleteUserModal(modalUser: User) {
+  showDeleteUserModal(modalUser: User): void {
     this.showModal = true;
     this.modalUser = modalUser;
   }
 
-  hideDeleteUserModal() {
+  hideDeleteUserModal(): void {
     this.showModal = false;
   }
 

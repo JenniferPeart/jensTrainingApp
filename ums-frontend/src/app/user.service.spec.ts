@@ -25,7 +25,7 @@ describe('UserService', () => {
   afterEach(() => {
     // once all requests have been provided a response using flush, we can
     // check that all requests were full-filled and there are no outstanding requests
-    httpMock.verify(); 
+    httpMock.verify();
   });
 
   it('should be created', () => {
@@ -41,53 +41,52 @@ describe('UserService', () => {
     });
 
     // Assert that a request is made to the our URl
-    let req = httpMock.expectOne('http://localhost:8080/api/v1/getUsers');
+    const req = httpMock.expectOne('http://localhost:8080/api/v1/getUsers');
 
     // Assert that the request is called using the GET HTTP method
-    expect(req.request.method).toBe("GET");
+    expect(req.request.method).toBe('GET');
 
     // respond with mock data, causing Observable to resolve
     // subscribe callback asserts that correct data ws returned
     req.flush(mockUsers);
   });
 
-  it('should call http POST and add a user', () => {  
+  it('should call http POST and add a user', () => {
 
     // Arrange
-    mockUser = {id: 5, fullName: "Test Name", email: "test@gmail.com"};
+    mockUser = {id: 5, fullName: 'Test Name', email: 'test@gmail.com'};
 
-    //Act
+    // Act
     service.addUser(mockUser).subscribe( user => {
 
-      //Assert
+      // Assert
       expect(user.fullName).toEqual(mockUser.fullName);
     });
 
-    //Assert
-    let req = httpMock.expectOne('http://localhost:8080/api/v1/addUser');
-    expect(req.request.method).toBe("POST");
+    // Assert
+    const req = httpMock.expectOne('http://localhost:8080/api/v1/addUser');
+    expect(req.request.method).toBe('POST');
     req.flush(mockUser);
   });
 
   it('should call http PUT and update a user', () => {
-    
-    mockUser = {id: 5, fullName: "Test Name", email: "test@gmail.com"};
+    mockUser = {id: 5, fullName: 'Test Name', email: 'test@gmail.com'};
     service.editUser(mockUser).subscribe( user => {
       expect(user.fullName).toEqual(mockUser.fullName);
     });
 
-    let req = httpMock.expectOne('http://localhost:8080/api/v1/editUser');
-    expect(req.request.method).toBe("PUT");
+    const req = httpMock.expectOne('http://localhost:8080/api/v1/editUser');
+    expect(req.request.method).toBe('PUT');
     req.flush(mockUser);
   });
 
   it('should call http DELETE and delete a user', () => {
-    mockUser = {id: 5, fullName: "Den", email: "den@gamil.com"};
+    mockUser = {id: 5, fullName: 'Den', email: 'den@gamil.com'};
     service.deleteUser(mockUser).subscribe();
 
-    let req = httpMock.expectOne('http://localhost:8080/api/v1/deleteUser/'+ mockUser.id);
-    expect(req.request.method).toBe("DELETE");
+    const req = httpMock.expectOne('http://localhost:8080/api/v1/deleteUser/' + mockUser.id);
+    expect(req.request.method).toBe('DELETE');
     req.flush(mockUser);
   });
-  
+
 });

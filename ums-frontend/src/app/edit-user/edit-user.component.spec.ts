@@ -4,7 +4,6 @@ import { USERS } from '../mock-users';
 import { UserService } from '../user.service';
 import { of } from 'rxjs';
 import { EditUserComponent } from './edit-user.component';
-import { UsersComponent } from '../users/users.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { routes } from '../app-routing.module';
 
@@ -14,11 +13,10 @@ describe('EditUserComponent', () => {
   let mockUsers: User[];
   let mockUser: User;
   let mockService: any;
-  let usersComponent: UsersComponent;
 
   beforeEach(() => {
     mockUsers = USERS;
-    mockUser = {id: 5, fullName: "testName", email: "test@email.com"}
+    mockUser = {id: 5, fullName: 'testName', email: 'test@email.com'};
 
     mockService = {
       getUsers: jasmine.createSpy('getUsers'),
@@ -35,8 +33,8 @@ describe('EditUserComponent', () => {
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EditUserComponent); 
-    component = fixture.componentInstance; 
+    fixture = TestBed.createComponent(EditUserComponent);
+    component = fixture.componentInstance;
   });
 
   it('should create', () => {
@@ -47,7 +45,7 @@ describe('EditUserComponent', () => {
     mockService.getUsers.and.returnValue(of(mockUsers));
     mockService.editUser.and.returnValue(of(mockUser));
     fixture.detectChanges();
-    component.editUser(5, "testName", "test@email.com");
+    component.editUser(5, 'testName', 'test@email.com');
     expect(mockService.editUser).toHaveBeenCalledTimes(1);
   });
 

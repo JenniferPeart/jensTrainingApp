@@ -20,11 +20,11 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  private handleError<T>(operation = 'operation', result?: T) {
+  private handleError<T>(operation = 'operation', result?: T): any {
     return (error: any): Observable<T> => {
       // send the error to remote logging infrastructure
       console.error(error);
-      {alert("The system was unable to complete your request to "+ operation)};
+      { alert('The system was unable to complete your request to ' + operation); }
       // let the app keep running by returning an empty result
       return of(result as T);
     };
@@ -61,6 +61,6 @@ export class UserService {
 
 }
 
-// The Observable is just a function, with minimal distinctive characteristics. 
-// Observables take in an “observer” (an object with “next”, “error” and “complete” methods on it), 
+// The Observable is just a function, with minimal distinctive characteristics.
+// Observables take in an “observer” (an object with “next”, “error” and “complete” methods on it),
 // and return cancellation logic.

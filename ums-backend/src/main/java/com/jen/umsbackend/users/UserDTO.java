@@ -8,6 +8,7 @@ public class UserDTO {
 
     public UserDTO() {}
 
+    // Returned user(s)
     public UserDTO(long id, String fullName, String email) {
         super();
         this.id = id;
@@ -15,6 +16,7 @@ public class UserDTO {
         this.email = email;
     }
 
+    // Add user
     public UserDTO(String fullName, String email) {
         this.fullName = fullName;
         this.email = email;

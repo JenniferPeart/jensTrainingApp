@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+// UserDetailsService - core interface which loads user-specific data and is used as a user DAO
 @Service
 public class UserPrincipalDetailsService implements UserDetailsService {
 

@@ -1,5 +1,7 @@
 package com.jen.umsbackend.security;
 
+import com.jen.umsbackend.users.UserRepository;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -7,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -15,34 +18,34 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserPrincipalDetailsService userPrincipalDetailsService;
+    private UserRepository userRepository;
 
-    public SecurityConfig(UserPrincipalDetailsService userPrincipalDetailsService) {
+    public SecurityConfig(UserPrincipalDetailsService userPrincipalDetailsService, UserRepository userRepository) {
         this.userPrincipalDetailsService = userPrincipalDetailsService;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
-
-        // In-memory users - not needed now database provider is configured
-        
-            // .inMemoryAuthentication()
-            // .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN")
-            // .and()
-            // .withUser("user").password(passwordEncoder().encode("user")).roles("USER");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // Makes sure any request to the app is authenticated with HTTP Basic authentication
         http
-            .authorizeRequests()
-            // Order of antMatchers is important
-            // Each time a http request comes in, the antMatchers are executed in this order
-            .antMatchers("/api/v1/profile/**").authenticated()
-            .antMatchers("/api/v1/admin/**").hasRole("ADMIN")
+            // Remove csrf and state in session because not needed for token based authentication
+            .csrf().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-            .httpBasic();
+            // Add JWT filters - authentication first, then authorisation
+            .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+            .addFilter(new JwtAuthorisationFilter(authenticationManager(), this.userRepository))
+            .authorizeRequests()
+            // Configure access rules
+            .antMatchers( "/login").permitAll()
+            .antMatchers("/api/v1/profile/*").authenticated()
+            .antMatchers("/api/v1/admin/*").hasRole("ADMIN")
+            .anyRequest().authenticated();
     }
 
     @Bean

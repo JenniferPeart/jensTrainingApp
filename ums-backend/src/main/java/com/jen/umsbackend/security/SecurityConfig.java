@@ -4,6 +4,7 @@ import com.jen.umsbackend.users.UserRepository;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -42,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .addFilter(new JwtAuthorisationFilter(authenticationManager(), this.userRepository))
             .authorizeRequests()
             // Configure access rules
-            .antMatchers( "/login").permitAll()
+            .antMatchers( HttpMethod.POST, "/login").permitAll()
             .antMatchers("/api/v1/profile/*").authenticated()
             .antMatchers("/api/v1/admin/*").hasRole("ADMIN")
             .anyRequest().authenticated();

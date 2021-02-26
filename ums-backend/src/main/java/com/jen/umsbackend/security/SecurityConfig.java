@@ -2,6 +2,7 @@ package com.jen.umsbackend.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -13,13 +14,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private UserPrincipalDetailsService userPrincipalDetailsService;
+
+    public SecurityConfig(UserPrincipalDetailsService userPrincipalDetailsService) {
+        this.userPrincipalDetailsService = userPrincipalDetailsService;
+    }
+
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .inMemoryAuthentication()
-            .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN")
-            .and()
-            .withUser("user").password(passwordEncoder().encode("user")).roles("USER");
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(authenticationProvider());
+
+        // In-memory users - not needed now database provider is configured
+        
+            // .inMemoryAuthentication()
+            // .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN")
+            // .and()
+            // .withUser("user").password(passwordEncoder().encode("user")).roles("USER");
     }
 
     @Override
@@ -27,9 +37,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Makes sure any request to the app is authenticated with HTTP Basic authentication
         http
             .authorizeRequests()
-            .anyRequest().authenticated()
+            // Order of antMatchers is important
+            // Each time a http request comes in, the antMatchers are executed in this order
+            .antMatchers("/api/v1/profile/**").authenticated()
+            .antMatchers("/api/v1/admin/**").hasRole("ADMIN")
             .and()
             .httpBasic();
+    }
+
+    @Bean
+    DaoAuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(this.userPrincipalDetailsService);
+
+        return daoAuthenticationProvider;
     }
 
     @Bean

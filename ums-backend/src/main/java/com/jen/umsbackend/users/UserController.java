@@ -21,23 +21,28 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
+    @GetMapping(value="/profile")
+	public String getUserDetails() {
+        return "User profile";
+    }
     
-    @GetMapping(value="/getUsers")
+    @GetMapping(value="/admin/getUsers")
 	public List<UserDTO> listUsers() {
         return userService.getUsers();
     }
     
-    @PostMapping(value="/addUser")
+    @PostMapping(value="/admin/addUser")
     public User addUser(@RequestBody UserDTO userDTO) {
         return userService.editOrAddUser(userDTO);
     }
 
-    @PutMapping(value="/editUser")
+    @PutMapping(value="/admin/editUser")
     public User editUser(@RequestBody UserDTO userDTO) {
         return userService.editOrAddUser(userDTO);
     }
 
-    @DeleteMapping(value="/deleteUser/{userId}")
+    @DeleteMapping(value="/admin/deleteUser/{userId}")
     public User deleteUser(@PathVariable("userId") long userId) {
         return userService.deleteUser(userId);
     }

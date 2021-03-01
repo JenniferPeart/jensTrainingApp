@@ -23,6 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public SecurityConfig(UserPrincipalDetailsService userPrincipalDetailsService, UserRepository userRepository) {
         this.userPrincipalDetailsService = userPrincipalDetailsService;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -35,18 +36,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Makes sure any request to the app is authenticated with HTTP Basic authentication
         http
             // Remove csrf and state in session because not needed for token based authentication
-            .csrf().disable()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            // Add JWT filters - authentication first, then authorisation
-            .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-            .addFilter(new JwtAuthorisationFilter(authenticationManager(), this.userRepository))
+            // .csrf().disable()
+            // .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            // .and()
+            // // Add JWT filters - authentication first, then authorisation
+            // .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+            // .addFilter(new JwtAuthorisationFilter(authenticationManager(), this.userRepository))
             .authorizeRequests()
             // Configure access rules
-            .antMatchers( HttpMethod.POST, "/login").permitAll()
+            // .antMatchers( HttpMethod.POST, "api/v1/login").permitAll()
             .antMatchers("/api/v1/profile/*").authenticated()
             .antMatchers("/api/v1/admin/*").hasRole("ADMIN")
-            .anyRequest().authenticated();
+            // .anyRequest().authenticated();
+            .and()
+            .httpBasic();
+
     }
 
     @Bean

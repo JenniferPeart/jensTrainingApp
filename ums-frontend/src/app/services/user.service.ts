@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 
-import { User } from './user';
+import { User } from '../interfaces/user';
 
 // a service is written for any cross-cutting concerns and may be used by more than one components
 

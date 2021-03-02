@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UsersComponent } from './users.component';
-import { User } from '../user';
-import { USERS } from '../mock-users';
-import { UserService } from '../user.service';
+import { User } from '../interfaces/user';
+import { USERS } from './mock-users';
+import { UserService } from '../services/user.service';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { routes } from '../app-routing.module';

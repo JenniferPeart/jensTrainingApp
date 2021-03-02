@@ -1,5 +1,19 @@
 <h1>{{title}}</h1>
-<nav class="navbar navbar-dark bg-dark">
-    <a routerLink="/users" routerLinkActive="active-link">Users</a>
-</nav>
+
+<div *ngIf="credentials.isAuthenticated">
+    <h2>Welcome {{ credentials.username }}</h2> <!-- Change to user's full name -->
+</div>
+
+<nav *ngIf="credentials.isAuthenticated" class="navbar navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+            <a *ngIf="credentials.isAdmin" class="nav-link" routerLink="/users" routerLinkActive="active-link">Users</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/my-details" routerLinkActive="active-link">My Details</a>
+        </li>
+      </ul>
+    <button class="btn btn-primary">Log Out</button>
+  </nav>
+
 <router-outlet></router-outlet>
